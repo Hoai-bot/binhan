@@ -1,0 +1,30 @@
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    // 1. Lấy ngôn ngữ hệ điều hành/trình duyệt của điện thoại du khách
+    const userLang = (navigator.language || navigator.userLanguage).toLowerCase();
+    
+    // 2. Định nghĩa các trang đích tương ứng với từng quốc tịch khách du lịch
+    const routes = {
+      "ko": "/binhan-kr", // Khách Hàn Quốc
+      "zh": "/binhan-cn", // Khách Trung Quốc / Đài Loan
+      "ja": "/binhan-jp", // Khách Nhật Bản
+      "fr": "/binhan-fr", // Khách Pháp
+      "ru": "/binhan-ru"  // Khách Nga
+    };
+
+    // 3. Kiểm tra và tự động điều hướng
+    let redirected = false;
+    for (const lang in routes) {
+      if (userLang.startsWith(lang)) {
+        window.location.href = routes[lang];
+        redirected = true;
+        break;
+      }
+    }
+
+    // 4. Nếu là khách Việt Nam hoặc các nước khác, mặc định về trang Tiếng Anh/Việt
+    if (!redirected) {
+      window.location.href = "/binhan-vn"; 
+    }
+  });
+</script>
