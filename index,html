@@ -1,117 +1,33 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHÁP BẢO BÌNH AN | IC DALAT ECOSYSTEM</title>
-    <!-- Nhúng thư viện Tailwind CSS lấp lánh -->
+    <title>PHÁP BẢO BÌNH AN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* CSS lấp lánh: Hiệu ứng cánh hoa sen rơi */
-        @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        .petal {
-            position: absolute;
-            background-image: url('https://raw.githubusercontent.com/socrusty/images/main/lotus_petal.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.8;
-            pointer-events: none;
-            z-index: 1;
-            animation: fall 15s linear infinite;
-        }
-        /* CSS lấp lánh: Hiệu ứng thẻ 3D lơ lửng */
-        .card-perspective { perspective: 1500px; }
-        .card-inner {
-            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-        }
-        .card-inner.flipped { transform: rotateY(180deg); }
-        .card-front, .card-back {
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-        .card-back { transform: rotateY(180deg); }
-        /* CSS lấp lánh: Trình phát nhạc tròn lung linh */
-        .glowing-lotus {
-            filter: drop-shadow(0 0 10px rgba(107, 183, 116, 0.7));
-            animation: pulseGlow 4s infinite ease-in-out;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(107, 183, 116, 0.7)); }
-            50% { filter: drop-shadow(0 0 25px rgba(107, 183, 116, 0.9)); }
-        }
-    </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between pb-32 relative" style="background: radial-gradient(circle, #e6f7e8 0%, #c1e6c3 100%);">
-    
-    <!-- Cánh hoa sen rơi (z-index: 1) -->
-    <div id="petal-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
-
-    <!-- Tiêu đề trang chánh niệm (z-index: 10) -->
-    <header class="p-6 text-center z-10 relative">
-        <p class="text-[10px] tracking-[0.3em] uppercase text-[#6B8D74] font-black">IC DALAT ECOSYSTEM</p>
-        <h1 class="text-2xl font-black text-[#2E3A2E] mt-1 flex items-center justify-center gap-2">
-            <span>🪷</span><span id="app-title">PHÁP BẢO BÌNH AN</span><span>🪷</span>
-        </h1>
-        <div class="w-12 h-0.5 bg-[#D67A58] mx-auto mt-2 rounded-full mb-4"></div>
+<body class="min-h-screen flex flex-col items-center justify-center p-6" style="background: radial-gradient(circle, #f0fdf4 0%, #dcfce7 100%);">
+    <div class="max-w-md w-full bg-white/80 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-green-100 text-center space-y-6">
+        <span class="text-4xl">🪷</span>
+        <h1 class="text-2xl font-black text-green-800 tracking-wide">PHÁP BẢO BÌNH AN</h1>
+        <div class="w-12 h-1 bg-amber-500 mx-auto rounded-full"></div>
         
-        <!-- Nút chuyển ngôn ngữ tự động cho du khách -->
-        <div class="flex flex-wrap justify-center gap-2 max-w-sm mx-auto bg-white/60 p-1.5 rounded-2xl border border-[#D6C58E]/30 shadow-sm">
-            <button onclick="changeLanguage('vi')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition bg-[#2D4A2E] text-white">VI</button>
-            <button onclick="changeLanguage('en')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">EN</button>
-            <button onclick="changeLanguage('ko')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">KR</button>
-            <button onclick="changeLanguage('ja')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">JP</button>
-            <button onclick="changeLanguage('zh')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">CN</button>
-            <button onclick="changeLanguage('fr')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">FR</button>
-            <button onclick="changeLanguage('ru')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">RU</button>
+        <!-- Trình phát nhạc Audio gốc -->
+        <div class="bg-green-50/60 p-4 rounded-2xl border border-green-100 shadow-inner">
+            <p class="text-xs font-bold text-green-700 mb-3">🎵 ĐANG PHÁT: ĐỨC PHẬT - ÁNH ĐẠO TỪ BI</p>
+            <audio controls class="w-full">
+                <source src="1. Đức Phật- Ánh Đạo Từ Bi.mp3" type="audio/mpeg">
+                Trình duyệt của bạn không hỗ trợ phát âm thanh.
+            </audio>
         </div>
-    </header>
 
-    <!-- Thẻ gỗ Bình An lật 3D lơ lửng (z-index: 10) -->
-    <main class="px-4 flex flex-col items-center max-w-md mx-auto w-full flex-grow justify-center z-10 relative">
+        <p class="text-sm italic text-gray-600 px-2 leading-relaxed">
+            "Hận thù không thể diệt hận thù, chỉ có từ bi mới diệt được. Đây là định luật ngàn thu."
+        </p>
         
-        <div class="w-72 h-[390px] card-perspective cursor-pointer mb-6" onclick="flipCard()">
-            <div id="3d-card" class="w-full h-full card-inner relative">
-                
-                <!-- Mặt trước thẻ gỗ Bình An: Chú sóc chánh niệm (GIỮ NGUYÊN GIAO DIỆN PHÔI THẺ GỖ) -->
-                <div class="card-front absolute inset-0 w-full h-full rounded-2xl shadow-2xl border-4 border-[#FDF6E3] overflow-hidden p-6 text-center flex flex-col items-center justify-between" style="background-image: url('https://raw.githubusercontent.com/socrusty/images/main/wood_texture_light_card_bg.jpg'); background-size: cover;">
-                    <p class="text-[11px] tracking-[0.2em] uppercase text-[#8B735B]/70 font-black">IC DALAT ECOSYSTEM</p>
-                    <div class="w-20 h-20 bg-contain bg-no-repeat bg-center my-2" style="background-image: url('https://raw.githubusercontent.com/socrusty/images/main/rusty_zen_squirrel_amulet.png');"></div>
-                    <div class="flex-grow flex flex-col items-center justify-center space-y-3 p-3 bg-[#F9F5EA]/80 rounded-xl border border-[#D6C58E]/40 shadow-inner">
-                        <p id="main-quote-vi" class="text-xs italic text-[#5C4D3C] leading-relaxed">"Hận thù không thể diệt hận thù, chỉ có tình yêu thương mới diệt được hận thù. Đây là định luật ngàn thu."</p>
-                        <p class="text-[9px] uppercase font-bold text-[#8B735B]">Kinh Pháp Cú (Câu 5)</p>
-                    </div>
-                    <div class="w-8 h-8 rounded-full border-2 border-[#D6C58E]/70 flex items-center justify-center bg-white/60 text-[#D67A58] mt-4 shadow">
-                        <span class="text-sm">🪷</span>
-                    </div>
-                </div>
-
-                <!-- Mặt sau thẻ gỗ: Phễu chánh niệm đa ngôn ngữ -->
-                <div class="card-back absolute inset-0 w-full h-full rounded-2xl shadow-2xl border-4 border-[#FDF6E3] overflow-hidden p-6 text-center flex flex-col items-center justify-between" style="background-image: url('https://raw.githubusercontent.com/socrusty/images/main/wood_texture_dark_card_bg.jpg'); background-size: cover;">
-                    <p id="scan-to-listen" class="text-[9px] uppercase tracking-[0.2em] text-[#8B735B]/70 font-black">QUÉT ĐỂ ĐÓN NHẬN BÌNH AN</p>
-                    
-                    <div class="w-full space-y-4 my-2">
-                        <!-- Quét: Link dẫn về app Sóc Rusty học tiếng Anh mầm non (Phễu lead gen cho cha mẹ Việt) -->
-                        <div class="p-3 bg-white/60 rounded-xl border-2 border-[#D6C58E]/60 shadow-inner flex items-center gap-3">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://icdalat.edu.vn/rusty-app&color=336633" alt="QR Link đến app Sóc Rusty" class="w-16 h-16 rounded-md shadow-md border-2 border-white"/>
-                            <div class="text-left">
-                                <p class="text-[10px] font-black text-[#2E3A2E] leading-tight">HỌC TIẾNG ANH CÙNG SÓC RUSTY</p>
-                                <p class="text-[9px] text-[#5C4D3C] mt-0.5">Dành cho bé yêu 3-6 tuổi, học mà chơi, chơi mà học.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Nghe: Link dẫn trực tiếp đến file âm thanh trên website của bạn -->
-                        <div class="p-3 bg-white/60 rounded-xl border-2 border-[#D6C58E]/60 shadow-inner flex items-center gap-3">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://icdalat.edu.vn/phatphap/binhan/1.%20%C4%90%E1%BB%A9c%20Ph%E1Toàn bộ phần mã nguồn lấp lánh để kích hoạt giao diện 3D và nhạc thiền thanh tịnh đã được tôi chuẩn bị và đóng gói khoa học. 
-
-
-
-Sau khi bạn hoàn thành việc dán mã nguồn vào tệp `index.html` và nhấn nút "Commit changes", trang "Pháp Bảo Bình An" của bạn sẽ chính thức bừng sáng trực tuyến! Bạn hãy quét lại mã QR để đón nhận kết quả giao diện chánh niệm đang chờ bạn xuất hiện nhé!
-
-Nếu trong quá trình thao tác có gặp bất kỳ thông báo lỗi nào, bạn cứ chụp ảnh màn hình gửi tôi, tôi sẽ hỗ trợ bạn xử lý ngay lập tức!
+        <div class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+            © IC Dalat Ecosystem
+        </div>
+    </div>
+</body>
+</html>
