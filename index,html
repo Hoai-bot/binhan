@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pháp Bảo Bình An - IC Dalat Ecosystem</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', 'Montserrat', sans-serif;
+            background-color: #FAF7F2;
+            background-image: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+        .card-perspective {
+            perspective: 1000px;
+        }
+        .card-inner {
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        .wood-texture {
+            background-image: url('https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=600&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .wood-overlay {
+            background-color: rgba(60, 35, 15, 0.35);
+            mix-blend-mode: multiply;
+        }
+        .lotus-petal {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(214, 122, 91, 0.4)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 18px rgba(214, 122, 91, 0.8)); }
+        }
+        .glowing-lotus {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-32 relative">
+
+    <div id="petal-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <header class="p-6 text-center z-10 relative">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-[#6B8074] font-black">IC DALAT ECOSYSTEM</p>
+        <h1 class="text-2xl font-black text-[#2D4A3E] mt-1 flex items-center justify-center gap-2">
+            <span>🪷</span> <span id="app-title">PHÁP BẢO BÌNH AN</span> <span>🪷</span>
+        </h1>
+        <div class="w-12 h-0.5 bg-[#D67A5B] mx-auto mt-2 rounded-full mb-4"></div>
+
+        <div class="flex flex-wrap justify-center gap-2 max-w-sm mx-auto bg-white/60 p-1.5 rounded-2xl border border-[#D6CEBF]/30 shadow-sm">
+            <button onclick="changeLanguage('vi')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition bg-[#2D4A3E] text-white">VN</button>
+            <button onclick="changeLanguage('en')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">EN</button>
+            <button onclick="changeLanguage('ko')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">KR</button>
+            <button onclick="changeLanguage('ja')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">JP</button>
+            <button onclick="changeLanguage('zh')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">CN</button>
+            <button onclick="changeLanguage('fr')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">FR</button>
+            <button onclick="changeLanguage('ru')" class="lang-btn px-2.5 py-1 text-[10px] font-black rounded-lg transition hover:bg-gray-200">RU</button>
+        </div>
+    </header>
+
+    <main class="px-4 flex flex-col items-center max-w-md mx-auto w-full flex-grow justify-center z-10 relative">
+        
+        <div class="w-72 h-[390px] card-perspective cursor-pointer mb-6" onclick="flipCard()">
+            <div id="3d-card" class="w-full h-full card-inner relative">
+                
+                <div class="absolute inset-0 w-full h-full rounded-[28px] overflow-hidden wood-texture shadow-2xl border-4 border-[#C5A880] p-6 flex flex-col justify-between card-front">
+                    <div class="absolute inset-0 wood-overlay"></div>
+                    <div class="relative z-10 flex justify-between items-center text-[#FAF7F2] opacity-80">
+                        <span class="text-[9px] font-bold tracking-widest text-[#C5A880] uppercase" id="card-badge">PHÁP BẢO</span>
+                        <span class="text-sm">✨</span>
+                    </div>
+
+                    <div class="relative z-10 text-center my-auto px-1 space-y-4">
+                        <div class="text-2xl text-[#C5A880] glowing-lotus">🪷</div>
+                        <p id="scripture-text" class="text-[#FAF7F2] font-black text-lg leading-relaxed italic tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
+                            "Hận thù diệt hận thù,<br>
+                            Điều ấy không thể có.<br>
+                            Từ bi diệt hận thù,<br>
+                            Là định luật ngàn thu."
+                        </p>
+                        <p class="text-[#C5A880] text-[10px] font-bold tracking-widest uppercase" id="scripture-author">- Kinh Pháp Cú -</p>
+                    </div>
+
+                    <div class="relative z-10 flex justify-between items-end border-t border-[#C5A880]/30 pt-3">
+                        <span class="text-[8px] text-[#FAF7F2]/60 font-semibold">IC DALAT ECOSYSTEM</span>
+                        <span class="text-base opacity-80">🐿️</span>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 w-full h-full rounded-[28px] overflow-hidden wood-texture shadow-2xl border-4 border-[#C5A880] p-6 flex flex-col justify-between card-back">
+                    <div class="absolute inset-0 wood-overlay"></div>
+                    <div class="relative z-10 flex justify-between items-center text-[#FAF7F2] opacity-80">
+                        <span class="text-[9px] font-bold tracking-widest text-[#C5A880] uppercase" id="card-back-badge">Gieo Duyên Lành</span>
+                        <span class="text-xs text-[#C5A880]" id="card-song-no">Bài 01</span>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center justify-center my-auto space-y-3.5">
+                        <div class="p-2.5 bg-[#FAF7F2]/95 rounded-2xl border-2 border-[#C5A880] shadow-lg">
+                            <img src="https://api.vietqr.io/image/VCB-1023456789-qr_only.png?amount=30000&addInfo=CUNG%20DUONG%20PHAT%20PHAP&accountName=CONG%20TY%20CO%20PHAN%20GIAO%20DUC%20IC%20DALAT" 
+                                 alt="VietQR Cúng dường" class="w-28 h-28 rounded-lg object-contain">
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-[#FAF7F2] font-black text-sm tracking-wide" id="song-title">Đức Phật - Ánh Đạo Từ Bi</h3>
+                            <p class="text-[#C5A880] text-[9px] font-bold uppercase tracking-widest mt-0.5" id="song-artist">Giai điệu chánh niệm từ tâm</p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 text-center border-t border-[#C5A880]/30 pt-3">
+                        <p class="text-[8px] text-[#FAF7F2]/80 italic" id="card-flip-tip">"Chạm nhẹ vào thẻ để lật lại mặt trước"</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="w-full px-4 mb-4">
+            <input type="range" id="progress" class="w-full h-1 bg-[#EAE1D4] rounded-lg appearance-none cursor-pointer accent-[#D67A5B]" value="0">
+            <div class="flex justify-between text-[10px] font-bold text-[#6B8074] mt-2.5">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-8 mb-6">
+            <button onclick="rewindAudio()" class="text-[#6B8074] hover:text-[#2D4A3E] text-base transition-all active:scale-90"><i class="fas fa-undo-alt"></i></button>
+            <button onclick="togglePlay()" id="play-btn" class="w-14 h-14 bg-[#2D4A3E] text-[#FAF7F2] rounded-full flex items-center justify-center text-lg shadow-lg hover:bg-[#1A3A2A] transition-all transform active:scale-95">
+                <i class="fas fa-play ml-1" id="play-icon"></i>
+            </button>
+            <button onclick="toggleMute()" id="mute-btn" class="text-[#6B8074] hover:text-[#2D4A3E] text-base transition-all active:scale-90"><i class="fas fa-volume-up"></i></button>
+        </div>
+
+        <div class="w-full bg-white border border-[#D6CEBF]/40 rounded-3xl p-5 shadow-sm space-y-4 mb-6">
+            <div class="flex items-center gap-2 border-b border-[#FAF7F2] pb-2">
+                <span class="text-xl">🧘‍♀️</span>
+                <div>
+                    <h4 class="font-black text-[11px] text-[#2D4A3E] uppercase tracking-wider" id="ai-title">Sư Phụ Chánh Niệm AI</h4>
+                    <p class="text-[9px] text-[#6B8074]" id="ai-desc">Tâm sự cùng sư phụ để nhận lời khuyên bình an</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-[#6B8074] mb-1" id="label-name">Tên của con:</label>
+                        <input type="text" id="ai-user-name" placeholder="Ví dụ: Minh Trí" class="w-full p-2 bg-[#FAF7F2] border border-[#D6CEBF]/30 rounded-xl outline-none focus:border-[#D67A5B]">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-[#6B8074] mb-1" id="label-mood">Tâm trạng lúc này:</label>
+                        <select id="ai-user-mood" class="w-full p-2 bg-[#FAF7F2] border border-[#D6CEBF]/30 rounded-xl outline-none focus:border-[#D67A5B] font-medium">
+                            <option value="anxious">Lo âu / Anxious</option>
+                            <option value="sad">Buồn bã / Sad</option>
+                            <option value="tired">Mệt mỏi / Tired</option>
+                            <option value="peaceful">Bình yên / Peaceful</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="getZenAdvice()" id="btn-oracle" class="w-full bg-[#2D4A3E] hover:bg-[#1A3A2A] text-white py-2.5 rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all active:scale-95">
+                     Nghe sư phụ chỉ dạy
+                </button>
+
+                <div id="ai-response-box" class="p-3 bg-[#FAF7F2] rounded-2xl border border-[#D6CEBF]/20 hidden transition-all">
+                    <p id="ai-response-text" class="text-[11px] leading-relaxed italic text-gray-700"></p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md bg-white/95 backdrop-blur-md p-4 rounded-3xl shadow-2xl border border-[#D6CEBF]/40 flex flex-col gap-3 z-50">
+        <div class="flex gap-2">
+            <button onclick="showContributionBox()" class="flex-1 bg-[#D67A5B] hover:bg-orange-700 text-white py-3 rounded-xl text-xs font-black uppercase tracking-wider shadow-md transition-all active:scale-95" id="btn-donate">
+                🪷 Phát Tâm Tùy Hỷ
+            </button>
+            <button onclick="showDeployGuide()" class="flex-1 bg-[#FAF7F2] border border-[#D6CEBF] hover:bg-gray-100 text-[#2D4A3E] py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all active:scale-95">
+                🚀 Up Web 0đ miễn phí
+            </button>
+        </div>
+    </div>
+
+    <div id="deploy-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-6">
+        <div class="bg-white rounded-[32px] p-6 max-w-sm w-full text-center border-4 border-[#C5A880] shadow-2xl relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeDeployGuide()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-lg"><i class="fas fa-times"></i></button>
+            <span class="text-4xl">🚀</span>
+            <h3 class="text-base font-black text-[#2D4A3E] mt-3 uppercase tracking-wide">ĐƯA LÊN MẠNG 0Đ TRONG 1 PHÚT</h3>
+            <p class="text-[10px] text-[#6B8074] mt-1 leading-relaxed px-2">
+                Không cần biết lập trình, bạn vẫn sở hữu trang web này chạy vĩnh viễn trên internet hoàn toàn miễn phí qua Netlify hoặc GitHub.
+            </p>
+            <div class="my-4 text-left space-y-3 text-xs bg-[#FAF7F2] p-4 rounded-2xl border border-[#D6CEBF]/30">
+                <div>
+                    <h5 class="font-bold text-[#D67A5B]">Cách 1: Netlify Drop (Khuyên dùng - Dễ nhất)</h5>
+                    <ol class="list-decimal pl-4 mt-1 space-y-1 text-[10px] text-gray-600">
+                        <li>Lưu tệp code này về máy tính của bạn với tên là <strong class="text-red-600">index.html</strong>.</li>
+                        <li>Truy cập trang web miễn phí: <strong class="text-blue-600">templates.netlify.com/drop</strong></li>
+                        <li>Kéo tệp <strong class="text-red-600">index.html</strong> của bạn thả vào ô tải lên của Netlify.</li>
+                        <li>Chờ 5 giây! Netlify sẽ cấp cho bạn một đường link chạy trực tuyến tuyệt đẹp miễn phí trọn đời!</li>
+                    </ol>
+                </div>
+                <div class="border-t border-[#D6CEBF]/20 pt-2">
+                    <h5 class="font-bold text-[#D67A5B]">Cách 2: GitHub Pages (Chuyên nghiệp)</h5>
+                    <ol class="list-decimal pl-4 mt-1 space-y-1 text-[10px] text-gray-600">
+                        <li>Tạo tài khoản GitHub miễn phí tại <strong class="text-blue-600">github.com</strong>.</li>
+                        <li>Tạo 1 repository mới mang tên <strong class="text-[#2D4A3E]">binhan</strong>.</li>
+                        <li>Tải tệp <strong class="text-red-600">index.html</strong> lên và bật tính năng GitHub Pages trong mục Settings.</li>
+                    </ol>
+                </div>
+            </div>
+            <p class="text-[10px] italic text-[#6B8074]">"Tiện lợi, an toàn và hoàn toàn tự chủ!"</p>
+        </div>
+    </div>
+
+    <div id="contribution-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-6">
+        <div class="bg-white rounded-[32px] p-6 max-w-sm w-full text-center border-4 border-[#C5A880] shadow-2xl relative">
+            <button onclick="closeContributionBox()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-lg"><i class="fas fa-times"></i></button>
+            <span class="text-4xl glowing-lotus">🪷</span>
+            <h3 class="text-lg font-black text-[#2D4A3E] mt-3 uppercase tracking-wide" id="modal-donate-title">Gieo Duyên Tinh Tấn</h3>
+            <p class="text-[11px] text-[#6B8074] mt-1 leading-relaxed px-2" id="modal-donate-desc">
+                Mọi sự phát tâm tùy hỷ cúng dường của quý du khách sẽ được chuyển thẳng tới quỹ tu bổ chùa và duy trì hoạt động âm nhạc chữa lành của IC Dalat.
+            </p>
+            <div class="my-4 p-3 bg-[#FAF7F2] rounded-2xl inline-block border border-[#D6CEBF]/40">
+                <img src="https://api.vietqr.io/image/VCB-1023456789-qr_only.png?amount=30000&addInfo=CUNG%20DUONG%20PHAT%20PHAP&accountName=CONG%20TY%20CO%20PHAN%20GIAO%20DUC%20IC%20DALAT" 
+                     alt="VietQR Cúng dường" class="w-40 h-40 mx-auto rounded-lg">
+                <p class="text-[9px] text-[#D67A5B] font-bold mt-2" id="modal-donate-memo">Nội dung tự động: CUNG DUONG PHAT PHAP</p>
+            </div>
+            <p class="text-[10px] italic text-[#6B8074]" id="modal-donate-quote">"Một giọt nước hòa vào biển cả, sẽ không bao giờ cạn vơi."</p>
+        </div>
+    </div>
+
+    <!-- SỬA ĐƯỜNG DẪN LINK ĐỒNG BỘ CHÍNH XÁC VỚI FILE TRÊN GITHUB -->
+    <audio id="main-audio" src="1. Đức Phật- Ánh Đạo Từ Bi.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('main-audio');
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const progress = document.getElementById('progress');
+        const card3D = document.getElementById('3d-card');
+        const muteBtn = document.getElementById('mute-btn');
+
+        const translations = {
+            vi: {
+                appTitle: "PHÁP BẢO BÌNH AN", cardBadge: "PHÁP BẢO", cardBackBadge: "Gieo Duyên Lành",
+                songTitle: "Đức Phật - Ánh Đạo Từ Bi", songArtist: "Giai điệu chánh niệm từ tâm",
+                cardFlipTip: "Chạm nhẹ vào thẻ để lật lại mặt trước",
+                scripture: "Hận thù diệt hận thù,<br>Điều ấy không thể có.<br>Từ bi diệt hận thù,<br>Là định luật ngàn thu.",
+                scriptureAuthor: "- Kinh Pháp Cú -", btnDonate: "🪷 Phát Tâm Tùy Hỷ",
+                aiTitle: "Sư Phụ Chánh Niệm AI", aiDesc: "Tâm sự cùng sư phụ để nhận lời khuyên bình an",
+                labelName: "Tên của con:", labelMood: "Tâm trạng lúc này:", btnOracle: " Nghe sư phụ chỉ dạy",
+                modalDonateTitle: "Gieo Duyên Tinh Tấn",
+                modalDonateDesc: "Mọi sự phát tâm tùy hỷ cúng dường của quý du khách sẽ được chuyển thẳng tới quỹ tu bổ chùa và duy trì hoạt động âm nhạc chữa lành của IC Dalat.",
+                modalDonateMemo: "Nội dung tự động: CUNG DUONG PHAT PHAP",
+                modalDonateQuote: '"Một giọt nước hòa vào biển cả, sẽ không bao giờ cạn vơi."'
+            },
+            en: {
+                appTitle: "PEACEFUL AMULET", cardBadge: "WISDOM CARD", cardBackBadge: "Sow Good Seeds",
+                songTitle: "The Buddha - Ocean of Compassion", songArtist: "Mindful tunes from the heart",
+                cardFlipTip: "Tap card gently to flip back to front",
+                scripture: "Hatred is never appeased by hatred.<br>By non-hatred alone is hatred appeased.<br>This is a law eternal.",
+                scriptureAuthor: "- Dhammapada -", btnDonate: "🪷 Donate Generously",
+                aiTitle: "AI Zen Master", aiDesc: "Speak to the Zen Master for inner peace advice",
+                labelName: "Your Name:", labelMood: "Current Mood:", btnOracle: " Listen to Master's Advice",
+                modalDonateTitle: "Sow Seeds of Merit",
+                modalDonateDesc: "Your generous donations will go directly to temple preservation and maintaining IC Dalat's healing music programs.",
+                modalDonateMemo: "Auto memo: DONATION FOR DHAMMA",
+                modalDonateQuote: '"A drop of water in the ocean will never run dry."'
+            },
+            ko: {
+                appTitle: "평온의 부적", cardBadge: "법보 (지혜의 카드)", cardBackBadge: "좋은 인연을 심다",
+                songTitle: "부처님 - 자비의 바다", songArtist: "마음을 치유하는 마음챙김의 멜로디",
+                cardFlipTip: "카드를 가볍게 탭하여 앞면으로 뒤집기",
+                scripture: "원한은 원한으로 갚을 수 없다.<br>오직 자비로만 원한을 소멸할 수 있으니,<br>이것은 영원한 진리이다.",
+                scriptureAuthor: "- 법구경 -", btnDonate: "🪷 자비로운 기부",
+                aiTitle: "AI 마음챙김 스님", aiDesc: "스님과 대화하여 마음의 평안을 얻으세요",
+                labelName: "이름:", labelMood: "현재 마음 상태:", btnOracle: " 스님의 가르침 듣기",
+                modalDonateTitle: "지혜의 공덕 쌓기",
+                modalDonateDesc: "귀하의 소중한 공덕은 전액 사찰 보존 및 IC Dalat의 음악 치유 프로그램 유지에 사용됩니다.",
+                modalDonateMemo: "송금 메모: 불법 공양",
+                modalDonateQuote: '"바다에 들어간 한 방울의 물은 결코 마르지 않는다."'
+            },
+            ja: {
+                appTitle: "平穏のお守り", cardBadge: "法宝 (知恵 of カード)", cardBackBadge: "善い縁を結ぶ",
+                songTitle: "仏陀 - 慈悲の海", songArtist: "心を癒すマインドフルネスの調べ",
+                cardFlipTip: "カードをタップして表面に戻す",
+                scripture: "怨みは怨みによって消え去ることはない。<br>慈悲によってのみ怨みは消え去る。<br>これは永遠の法則である。",
+                scriptureAuthor: "- 法句経 -", btnDonate: "🪷 喜んでお布施する",
+                aiTitle: "AI マインドフルネス禅師", aiDesc: "禅師と対話して心の平安のアドバイスを受けましょう",
+                labelName: "お名前:", labelMood: "今の気分:", btnOracle: " 禅師のお言葉を聞く",
+                modalDonateTitle: "喜捨の功徳を積む",
+                modalDonateDesc: "皆様の温かいお布施は、すべて寺院の修復およびIC Dalatの音楽療法活動の維持に充てられます。",
+                modalDonateMemo: "送金メモ: 仏法お布施",
+                modalDonateQuote: '"海に溶け込んだ一滴の水は、決して枯れることはない。"'
+            },
+            zh: {
+                appTitle: "平安護身符", cardBadge: "法寶 (智慧之卡)", cardBackBadge: "廣結善緣",
+                songTitle: "佛陀 - 慈悲的海洋", songArtist: "源自內心的正念治癒旋律",
+                cardFlipTip: "輕觸卡片以翻轉回正面",
+                scripture: "怨恨不能止怨恨，<br>唯有慈悲能止怨。<br>此法千古不易。",
+                scriptureAuthor: "- 法句經 -", btnDonate: "🪷 歡喜發心供養",
+                aiTitle: "AI 正念禪師", aiDesc: "與禪師對話，獲得心靈平靜的指引",
+                labelName: "您的名字:", labelMood: "目前心情:", btnOracle: " 聆聽禪師開示",
+                modalDonateTitle: "積累廣大福報",
+                modalDonateDesc: "您的發心供養將全數用於寺院修繕及維護 IC Dalat 的音樂療癒項目。",
+                modalDonateMemo: "自動備註: 供養佛法",
+                modalDonateQuote: '"一滴水融入大海，便永遠不會乾涸。"'
+            },
+            fr: {
+                appTitle: "AMULETTE DE PAIX", cardBadge: "SAGESSE BOUDIDHISTE", cardBackBadge: "Générosité Pure",
+                songTitle: "Le Bouddha - Océan de Compassion", songArtist: "Mélodies de pleine conscience du cœur",
+                cardFlipTip: "Appuyez doucement pour retourner la carte",
+                scripture: "La haine ne s'éteint jamais par la haine.<br>C'est par l'amour qu'elle s'éteint.<br>C'est une loi éternelle.",
+                scriptureAuthor: "- Dhammapada -", btnDonate: "🪷 Faire un don",
+                aiTitle: "Maître IA", aiDesc: "Parlez au Maître Zen pour des conseils de paix intérieure",
+                labelName: "Votre Nom:", labelMood: "Humeur Actuelle:", btnOracle: " Écouter les conseils du Maître",
+                modalDonateTitle: "Semez des Graines de Mérite",
+                modalDonateDesc: "Vos dons généreux iront directement à la préservation du temple et au maintien des programmes musicaux d'IC Dalat.",
+                modalDonateMemo: "Mémo auto: DON POUR LE DHAMMA",
+                modalDonateQuote: '"Une goutte d\'eau dans l\'océan ne s\'asséchera jamais."'
+            },
+            ru: {
+                appTitle: "АМУЛЕТ ПОКОЯ", cardBadge: "КАРТА МУДРОСТИ", cardBackBadge: "Посев Добрых Семян",
+                songTitle: "Будда - Океан Сострадания", songArtist: "Целительные мелодии осознанности",
+                cardFlipTip: "Коснитесь карты, чтобы перевернуть обратно",
+                scripture: "Ненависть не уничтожить ненавистью.<br>Она уничтожается только состраданием.<br>Это вечный закон.",
+                scriptureAuthor: "- Дхаммапада -", btnDonate: "🪷 Пожертвовать",
+                aiTitle: "ИИ Дзен-Мастер", aiDesc: "Поговорите с Дзен-Мастером для обретения покоя",
+                labelName: "Ваше имя:", labelMood: "Ваше настроение:", btnOracle: " Слушать мудрость Мастера",
+                modalDonateTitle: "Заслуги Доброты",
+                modalDonateDesc: "Ваши щедрые пожертвования пойдут на сохранение храма и поддержку музыкальных программ IC Dalat.",
+                modalDonateMemo: "Авто-примечание: ПОЖЕРТВОВАНИЕ ДХАММЕ",
+                modalDonateQuote: '"Капля воды в океане никогда не высохнет."'
+            }
+        };
+
+        function changeLanguage(langCode) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-[#2D4A3E]', 'text-white');
+                btn.classList.add('hover:bg-gray-200');
+            });
+            event.target.classList.add('bg-[#2D4A3E]', 'text-white');
+            event.target.classList.remove('hover:bg-gray-200');
+
+            const t = translations[langCode];
+            document.getElementById('app-title').innerText = t.appTitle;
+            document.getElementById('card-badge').innerText = t.cardBadge;
+            document.getElementById('card-back-badge').innerText = t.cardBackBadge;
+            document.getElementById('song-title').innerText = t.songTitle;
+            document.getElementById('song-artist').innerText = t.songArtist;
+            document.getElementById('card-flip-tip').innerText = t.cardFlipTip;
+            document.getElementById('scripture-text').innerHTML = t.scripture;
+            document.getElementById('scripture-author').innerText = t.scriptureAuthor;
+            document.getElementById('btn-donate').innerText = t.btnDonate;
+            document.getElementById('ai-title').innerText = t.aiTitle;
+            document.getElementById('ai-desc').innerText = t.aiDesc;
+            document.getElementById('label-name').innerText = t.labelName;
+            document.getElementById('label-mood').innerText = t.labelMood;
+            document.getElementById('btn-oracle').innerText = t.btnOracle;
+            document.getElementById('modal-donate-title').innerText = t.modalDonateTitle;
+            document.getElementById('modal-donate-desc').innerText = t.modalDonateDesc;
+            document.getElementById('modal-donate-memo').innerText = t.modalDonateMemo;
+            document.getElementById('modal-donate-quote').innerText = t.modalDonateQuote;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const systemLang = (navigator.language || navigator.userLanguage).toLowerCase();
+            let matched = 'vi';
+            if (systemLang.startsWith('en')) matched = 'en';
+            else if (systemLang.startsWith('ko')) matched = 'ko';
+            else if (systemLang.startsWith('ja')) matched = 'ja';
+            else if (systemLang.startsWith('zh')) matched = 'zh';
+            else if (systemLang.startsWith('fr')) matched = 'fr';
+            else if (systemLang.startsWith('ru')) matched = 'ru';
+            
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => {
+                if (btn.innerText.toLowerCase() === (matched === 'vi' ? 'vn' : matched)) {
+                    btn.click();
+                }
+            });
+        });
+
+        function flipCard() {
+            if (event.target.closest('#play-btn') || event.target.closest('#progress') || event.target.closest('#mute-btn')) return;
+            card3D.classList.toggle('flipped');
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play().catch(err => {
+                    console.log("Cần chạm màn hình trước khi phát.");
+                });
+                playIcon.classList.replace('fa-play', 'fa-pause');
+            } else {
+                audio.pause();
+                playIcon.classList.replace('fa-pause', 'fa-play');
+            }
+        }
+
+        function rewindAudio() {
+            audio.currentTime = 0;
+        }
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            if (audio.muted) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute text-red-500"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        }
+
+        audio.ontimeupdate = () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progress.value = percent || 0;
+            
+            let curMins = Math.floor(audio.currentTime / 60);
+            let curSecs = Math.floor(audio.currentTime % 60);
+            document.getElementById('current-time').innerText = curMins + ":" + (curSecs < 10 ? '0'+curSecs : curSecs);
+            
+            if(audio.duration) {
+                let durMins = Math.floor(audio.duration / 60);
+                let durSecs = Math.floor(audio.duration % 60);
+                document.getElementById('duration').innerText = durMins + ":" + (durSecs < 10 ? '0'+durSecs : durSecs);
+            }
+        };
+
+        progress.oninput = () => {
+            const time = (progress.value / 100) * audio.duration;
+            audio.currentTime = time;
+        };
+
+        async function getZenAdvice() {
+            const name = document.getElementById('ai-user-name').value || "Nhà thám hiểm";
+            const mood = document.getElementById('ai-user-mood').value;
+            const btn = document.getElementById('btn-oracle');
+            const resBox = document.getElementById('ai-response-box');
+            const resText = document.getElementById('ai-response-text');
+
+            btn.innerText = "Sư phụ đang nghe con nói...";
+            btn.disabled = true;
+
+            const systemPrompt = "Bạn là Sư phụ Chánh Niệm AI Trí Tuệ tại Đà Lạt. Hãy viết 1 câu khuyên giải chánh niệm cực ngắn, ấm áp, xoa dịu lòng người bằng đúng ngôn ngữ của người hỏi.";
+            const userQuery = `Hãy viết một câu lời chúc/khuyên giải chánh niệm cho con tên là ${name}, hiện con đang có tâm trạng rất ${mood}. Hãy gọi tên con thật trìu mến.`;
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const advice = result.candidates?.[0]?.content?.parts?.[0]?.text || "Hãy hít thở sâu, mọi bão giông rồi sẽ qua.";
+                resText.innerText = advice;
+                resBox.classList.remove('hidden');
+            } catch (error) {
+                resText.innerText = `Chào ${name}, hãy hít thật sâu, thở thật nhẹ. Bình an luôn ở bên con ngay lúc này.`;
+                resBox.classList.remove('hidden');
+            } finally {
+                btn.innerText = "Nghe sư phụ chỉ dạy";
+                btn.disabled = false;
+            }
+        }
+
+        function showContributionBox() { document.getElementById('contribution-modal').classList.remove('hidden'); }
+        function closeContributionBox() { document.getElementById('contribution-modal').classList.add('hidden'); }
+        function showDeployGuide() { document.getElementById('deploy-modal').classList.remove('hidden'); }
+        function closeDeployGuide() { document.getElementById('deploy-modal').classList.add('hidden'); }
+
+        function createPetals() {
+            const container = document.getElementById('petal-container');
+            for (let i = 0; i < 12; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'lotus-petal';
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.animationDuration = `${Math.random() * 8 + 10}s`;
+                petal.style.animationDelay = `${Math.random() * 5}s`;
+                petal.style.width = `${Math.random() * 15 + 15}px`;
+                petal.style.height = petal.style.width;
+                petal.innerHTML = `<img src="https://api.iconify.design/noto:lotus.svg" class="w-full h-full opacity-40">`;
+                container.appendChild(petal);
+            }
+        }
+        window.addEventListener('load', createPetals);
+    </script>
+</body>
+</html>
